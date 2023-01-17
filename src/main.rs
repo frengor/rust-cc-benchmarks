@@ -1,7 +1,6 @@
-use criterion::{Criterion, criterion_group, criterion_main};
+use std::process::exit;
 
-fn bench(c: &mut Criterion) {
+fn main() {
+    eprintln!("In order to run the benchmarks, use 'cargo bench'.");
+    exit(1);
 }
-
-criterion_group!(benches, bench);
-criterion_main!(benches);

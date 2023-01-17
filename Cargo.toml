@@ -15,3 +15,12 @@ publish = false
 [dependencies]
 criterion = { version = "0.4.0", features = ["html_reports"] }
 rand = "0.8.3"
+
+rust-cc = { git = "https://github.com/frengor/rust-cc" }
+gc = { version = "0.4.1", features = ["derive"] }
+shredder = "0.2.0"
+comet = { git = "https://github.com/Starlight-JS/comet" }
+
+[[bench]]
+name = "bench"
+harness = false
