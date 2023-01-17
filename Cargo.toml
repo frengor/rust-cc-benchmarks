@@ -1,0 +1,17 @@
+[package]
+name = "rust-cc-benchmarks"
+description = "Benchmarks for rust-cc and other garbage collectors implemented in the Rust programming language"
+version = "0.1.0"
+authors = ["fren_gor <goro@frengor.com>"]
+readme = "README.md"
+repository = "https://github.com/frengor/rust-cc-benchmarks"
+license = "MIT OR Apache-2.0"
+edition = "2021"
+
+publish = false
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+criterion = { version = "0.4.0", features = ["html_reports"] }
+rand = "0.8.3"
