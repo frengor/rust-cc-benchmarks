@@ -4,11 +4,13 @@ use std::hint::black_box;
 use criterion::BenchmarkGroup;
 use criterion::measurement::Measurement;
 
-use shredder::*;
+use cgc_single_threaded::api::*;
+use cgc_single_threaded::heap::Heap;
 
 // BENCHMARK 2: It's binary-trees from the benchmarks game!
 
 fn count_binary_trees(max_size: usize) -> Vec<usize> {
+    let mut heap = Heap::new(1024, 2048, false);
     let mut res = Vec::new();
     {
         let min_size = 4;
@@ -18,47 +20,60 @@ fn count_binary_trees(max_size: usize) -> Vec<usize> {
             let mut check = 0;
 
             for _ in 1..=iterations {
-                check += Gc::new(TreeNode::new(depth)).get().check();
+                let tree = TreeNode::new(depth, &mut heap);
+                check += heap.allocate(tree).check();
             }
 
             res.push(check);
         }
     }
-    collect();
+    heap.collect();
     res
 }
 
-#[derive(Scan)]
 enum TreeNode {
     Nested {
-        left: Gc<TreeNode>,
-        right: Gc<TreeNode>,
+        left: Handle<TreeNode>,
+        right: Handle<TreeNode>,
     },
     End,
 }
 
+impl Traceable for TreeNode {
+    fn trace_with(&self, tracer: &mut Tracer) {
+        if let Self::Nested { left, right } = self {
+            left.trace_with(tracer);
+            right.trace_with(tracer);
+        }
+    }
+}
+
+impl Finalizer for TreeNode {}
+
 impl TreeNode {
-    fn new(depth: usize) -> Self {
+    fn new(depth: usize, heap: &mut Heap) -> Self {
         if depth == 0 {
             return Self::End;
         }
 
+        let left = Self::new(depth - 1, heap);
+        let right = Self::new(depth - 1, heap);
         Self::Nested {
-            left: Gc::new(Self::new(depth - 1)),
-            right: Gc::new(Self::new(depth - 1)),
+            left: heap.allocate(left).to_heap(),
+            right: heap.allocate(right).to_heap(),
         }
     }
 
     fn check(&self) -> usize {
         match self {
             Self::End => 1,
-            Self::Nested { left, right } => left.get().check() + right.get().check() + 1,
+            Self::Nested { left, right } => left.check() + right.check() + 1,
         }
     }
 }
 
 pub fn benchmark_count_binary_trees(c: &mut BenchmarkGroup<impl Measurement>) {
-    c.bench_function("shredder", |b| {
+    c.bench_function("cgc-single-threaded", |b| {
         b.iter(|| count_binary_trees(black_box(11)))
     });
 }

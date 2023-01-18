@@ -18,7 +18,7 @@ fn count_binary_trees(max_size: usize) -> Vec<usize> {
             let mut check = 0;
 
             for _ in 1..=iterations {
-                check += (TreeNode::new(depth)).check();
+                check += Cc::new(TreeNode::new(depth)).check();
             }
 
             res.push(check);
