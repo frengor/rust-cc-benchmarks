@@ -15,11 +15,12 @@ publish = false
 [dependencies]
 criterion = { version = "0.4.0", features = ["html_reports"] }
 rand = "0.8.3"
+parking_lot = "0.11" # For mgc benchmarks
 
 rust-cc = { git = "https://github.com/frengor/rust-cc" }
 gc = { version = "0.4.1", features = ["derive"] }
 shredder = "0.2.0"
-mgc = "0.0.0"
+mgc = { git = "https://github.com/sunjay/mgc" }
 broom = "0.3.2"
 
 [[bench]]
