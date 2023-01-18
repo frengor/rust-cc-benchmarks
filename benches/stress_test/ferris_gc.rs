@@ -10,10 +10,35 @@ use ferris_gc::*;
 
 // BENCHMARK 1: My janky stress test
 // (It basically creates a graph where every node is rooted, then de-roots some nodes a few at a time)
-#[derive(Trace, Finalize)]
 struct DirectedGraphNode {
     _label: String,
     edges: Vec<Gc<GcCell<DirectedGraphNode>>>,
+}
+
+// Manually implementing since proc macro prints debug stuff on stdout
+impl Trace for DirectedGraphNode {
+    fn is_root(&self) -> bool {
+        unreachable!("is_root should never be called on user-defined type !!")
+    }
+    fn reset_root(&self) {
+        self._label.reset_root();
+        self.edges.reset_root();
+    }
+    fn trace(&self) {
+        self._label.trace();
+        self.edges.trace();
+    }
+    fn reset(&self) {
+        self._label.reset();
+        self.edges.reset();
+    }
+    fn is_traceable(&self) -> bool {
+        unreachable!("is_traceable should never be called on user-defined type !!")
+    }
+}
+
+impl Finalize for DirectedGraphNode {
+    fn finalize(&self) {}
 }
 
 const NODE_COUNT: usize = 1 << 15;
