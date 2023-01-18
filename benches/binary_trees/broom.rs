@@ -4,13 +4,12 @@ use std::hint::black_box;
 use criterion::BenchmarkGroup;
 use criterion::measurement::Measurement;
 
-use cgc_single_threaded::api::*;
-use cgc_single_threaded::heap::Heap;
+use broom::prelude::*;
 
 // BENCHMARK 2: It's binary-trees from the benchmarks game!
 
 fn count_binary_trees(max_size: usize) -> Vec<usize> {
-    let mut heap = Heap::new(1024, 2048, false);
+    let mut heap = Heap::default();
     let mut res = Vec::new();
     {
         let min_size = 4;
@@ -21,13 +20,14 @@ fn count_binary_trees(max_size: usize) -> Vec<usize> {
 
             for _ in 1..=iterations {
                 let tree = TreeNode::new(depth, &mut heap);
-                check += heap.allocate(tree).check();
+                let root = heap.insert(tree);
+                check += heap.get(root).unwrap().check(&heap);
             }
 
             res.push(check);
         }
     }
-    heap.collect();
+    heap.clean();
     res
 }
 
@@ -39,19 +39,17 @@ enum TreeNode {
     End,
 }
 
-impl Traceable for TreeNode {
-    fn trace_with(&self, tracer: &mut Tracer) {
+impl Trace<Self> for TreeNode {
+    fn trace(&self, tracer: &mut Tracer<Self>) {
         if let Self::Nested { left, right } = self {
-            left.trace_with(tracer);
-            right.trace_with(tracer);
+            left.trace(tracer);
+            right.trace(tracer);
         }
     }
 }
 
-impl Finalizer for TreeNode {}
-
 impl TreeNode {
-    fn new(depth: usize, heap: &mut Heap) -> Self {
+    fn new(depth: usize, heap: &mut Heap<TreeNode>) -> Self {
         if depth == 0 {
             return Self::End;
         }
@@ -59,21 +57,21 @@ impl TreeNode {
         let left = Self::new(depth - 1, heap);
         let right = Self::new(depth - 1, heap);
         Self::Nested {
-            left: heap.allocate(left).to_heap(),
-            right: heap.allocate(right).to_heap(),
+            left: heap.insert_temp(left),
+            right: heap.insert_temp(right),
         }
     }
 
-    fn check(&self) -> usize {
+    fn check(&self, heap: &Heap<TreeNode>) -> usize {
         match self {
             Self::End => 1,
-            Self::Nested { left, right } => left.check() + right.check() + 1,
+            Self::Nested { left, right } => heap.get(left).unwrap().check(heap) + heap.get(right).unwrap().check(heap) + 1,
         }
     }
 }
 
 pub fn benchmark_count_binary_trees(c: &mut BenchmarkGroup<impl Measurement>) {
-    c.bench_function("cgc-single-threaded", |b| {
+    c.bench_function("broom", |b| {
         b.iter(|| count_binary_trees(black_box(11)))
     });
 }

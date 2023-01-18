@@ -5,16 +5,14 @@ use rand::SeedableRng;
 mod rust_cc;
 mod gc;
 mod shredder;
-mod cgc_single_threaded;
-mod ferris_gc;
+mod broom;
 
 pub fn stress_test(c: &mut Criterion) {
     let group = &mut c.benchmark_group("stress test");
     rust_cc::benchmark_stress_test(group, &mut create_rng());
     gc::benchmark_stress_test(group, &mut create_rng());
     shredder::benchmark_stress_test(group, &mut create_rng());
-    cgc_single_threaded::benchmark_stress_test(group, &mut create_rng());
-    ferris_gc::benchmark_stress_test(group, &mut create_rng());
+    broom::benchmark_stress_test(group, &mut create_rng());
 }
 
 fn create_rng() -> StdRng {

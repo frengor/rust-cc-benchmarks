@@ -71,11 +71,23 @@ impl TreeNodeWithParent {
             return Gc::new(Self::End);
         }
 
-        Gc::new(Self::Nested {
+        let gc = Gc::new(Self::Nested {
             left: Self::new_nested(depth - 1),
             right: Self::new_nested(depth - 1),
             parent: GcCell::new(None),
-        })
+        });
+
+        if let Self::Nested{ left, right, .. } = &*gc {
+            if let Self::Nested { parent, ..} = &**left {
+                *parent.borrow_mut() = Some(gc.clone());
+            }
+
+            if let Self::Nested { parent, ..} = &**right {
+                *parent.borrow_mut() = Some(gc.clone());
+            }
+        }
+
+        gc
     }
 
     fn check(&self) -> usize {

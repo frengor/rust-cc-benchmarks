@@ -19,10 +19,8 @@ rand = "0.8.3"
 rust-cc = { git = "https://github.com/frengor/rust-cc" }
 gc = { version = "0.4.1", features = ["derive"] }
 shredder = "0.2.0"
-ferris-gc = { version = "0.1.5", features = ["proc-macro"] }
 mgc = "0.0.0"
 broom = "0.3.2"
-cgc-single-threaded = "0.1.1"
 
 [[bench]]
 name = "bench"
