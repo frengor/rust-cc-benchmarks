@@ -43,6 +43,7 @@ fn stress_test(rng: &mut StdRng) -> Vec<usize> {
         for i in 0..NODE_COUNT {
             if i % SHRINK_DIV == 0 {
                 nodes.truncate(NODE_COUNT - i);
+                force_collect();
                 res.push(nodes.len());
             }
         }
