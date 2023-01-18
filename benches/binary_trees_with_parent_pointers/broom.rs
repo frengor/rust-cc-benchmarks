@@ -1,6 +1,5 @@
 //! Benchmark adapted from the shredder crate, released under MIT license. Src: https://github.com/Others/shredder/blob/266de5a3775567463ee82febc42eed1c9a8b6197/benches/shredder_benchmark.rs
 
-use std::cell::RefCell;
 use std::hint::black_box;
 use criterion::BenchmarkGroup;
 use criterion::measurement::Measurement;
