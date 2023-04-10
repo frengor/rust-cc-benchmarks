@@ -8,6 +8,7 @@ mod gc;
 mod shredder;
 mod broom;
 mod mgc;
+mod bacon_rajan_cc;
 
 pub fn stress_test(c: &mut Criterion) {
     let group = &mut c.benchmark_group("stress test");
@@ -17,6 +18,7 @@ pub fn stress_test(c: &mut Criterion) {
     shredder::benchmark_stress_test(group, &mut create_rng());
     broom::benchmark_stress_test(group, &mut create_rng());
     mgc::benchmark_stress_test(group, &mut create_rng());
+    bacon_rajan_cc::benchmark_stress_test(group, &mut create_rng());
 }
 
 fn create_rng() -> StdRng {

@@ -6,6 +6,7 @@ mod gc;
 mod shredder;
 mod broom;
 mod mgc;
+mod bacon_rajan_cc;
 
 pub fn large_linked_list(c: &mut Criterion) {
     let group = &mut c.benchmark_group("large linked list");
@@ -15,4 +16,5 @@ pub fn large_linked_list(c: &mut Criterion) {
     shredder::benchmark_large_linked_list(group);
     broom::benchmark_large_linked_list(group);
     mgc::benchmark_large_linked_list(group);
+    bacon_rajan_cc::benchmark_large_linked_list(group);
 }
