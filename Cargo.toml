@@ -22,8 +22,9 @@ criterion = { version = "0.5.1", features = ["html_reports"] }
 rand = "0.8.3"
 parking_lot = "=0.11" # For mgc benchmarks
 
+#rust-cc = "0.2.0"
 #rust-cc = { git = "https://github.com/frengor/rust-cc", branch = "dev" }
-rust-cc = "0.2.0"
+rust-cc = { git = "https://github.com/frengor/rust-cc", branch = "no-invalid" }
 gc = { git = "https://github.com/Manishearth/rust-gc", features = ["derive"] }
 shredder = {version = "0.2.0", optional = true }
 mgc = { git = "https://github.com/sunjay/mgc" }
