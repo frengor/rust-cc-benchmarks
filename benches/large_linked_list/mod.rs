@@ -1,5 +1,7 @@
 use criterion::Criterion;
 
+mod rc;
+mod arc;
 mod rust_cc;
 mod gc;
 #[cfg(feature = "shredder")]
@@ -10,6 +12,8 @@ mod bacon_rajan_cc;
 
 pub fn large_linked_list(c: &mut Criterion) {
     let group = &mut c.benchmark_group("large linked list");
+    rc::benchmark_large_linked_list(group);
+    arc::benchmark_large_linked_list(group);
     rust_cc::benchmark_large_linked_list(group);
     gc::benchmark_large_linked_list(group);
     #[cfg(feature = "shredder")]

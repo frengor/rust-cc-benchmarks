@@ -1,5 +1,7 @@
 use criterion::Criterion;
 
+mod rc;
+mod arc;
 mod rust_cc;
 mod gc;
 #[cfg(feature = "shredder")]
@@ -10,6 +12,8 @@ mod bacon_rajan_cc;
 
 pub fn binary_trees(c: &mut Criterion) {
     let group = &mut c.benchmark_group("binary trees");
+    rc::benchmark_count_binary_trees(group);
+    arc::benchmark_count_binary_trees(group);
     rust_cc::benchmark_count_binary_trees(group);
     gc::benchmark_count_binary_trees(group);
     #[cfg(feature = "shredder")]
