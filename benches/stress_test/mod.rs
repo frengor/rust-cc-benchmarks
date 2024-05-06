@@ -4,6 +4,7 @@ use rand::SeedableRng;
 
 mod rust_cc;
 mod gc;
+mod safe_gc;
 #[cfg(feature = "shredder")]
 mod shredder;
 mod broom;
@@ -14,6 +15,7 @@ pub fn stress_test(c: &mut Criterion) {
     let group = &mut c.benchmark_group("stress test");
     rust_cc::benchmark_stress_test(group, &mut create_rng());
     gc::benchmark_stress_test(group, &mut create_rng());
+    safe_gc::benchmark_stress_test(group, &mut create_rng());
     #[cfg(feature = "shredder")]
     shredder::benchmark_stress_test(group, &mut create_rng());
     broom::benchmark_stress_test(group, &mut create_rng());
