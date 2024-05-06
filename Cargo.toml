@@ -37,3 +37,6 @@ shredder = ["dep:shredder"]
 [[bench]]
 name = "bench"
 harness = false
+
+[target.'cfg(not(target_env = "msvc"))'.dependencies]
+tikv-jemallocator = { version = "0.5.4", features = ["profiling"] }
