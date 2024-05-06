@@ -4,6 +4,7 @@ mod rc;
 mod arc;
 mod rust_cc;
 mod gc;
+#[cfg(feature = "safe-gc")]
 mod safe_gc;
 #[cfg(feature = "shredder")]
 mod shredder;
@@ -17,6 +18,7 @@ pub fn large_linked_list(c: &mut Criterion) {
     arc::benchmark_large_linked_list(group);
     rust_cc::benchmark_large_linked_list(group);
     gc::benchmark_large_linked_list(group);
+    #[cfg(feature = "safe-gc")]
     safe_gc::benchmark_large_linked_list(group);
     #[cfg(feature = "shredder")]
     shredder::benchmark_large_linked_list(group);
