@@ -34,10 +34,11 @@ bacon_rajan_cc = "0.4.0"
 [features]
 shredder = ["dep:shredder"]
 safe-gc = ["dep:safe-gc"]
+jemalloc = ["dep:tikv-jemallocator"]
 
 [[bench]]
 name = "bench"
 harness = false
 
 [target.'cfg(not(target_env = "msvc"))'.dependencies]
-tikv-jemallocator = { version = "0.5.4", features = ["profiling"] }
+tikv-jemallocator = { version = "0.5.4", optional = true }
