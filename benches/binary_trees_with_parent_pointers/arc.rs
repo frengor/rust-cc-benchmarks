@@ -77,6 +77,6 @@ impl TreeNodeWithParent {
 
 pub fn benchmark_count_binary_trees_with_parent(c: &mut BenchmarkGroup<impl Measurement>) {
     c.bench_function("arc", |b| {
-        b.iter(|| count_binary_trees_with_parent(black_box(11)))
+        b.iter_with_large_drop(|| count_binary_trees_with_parent(black_box(11)))
     });
 }

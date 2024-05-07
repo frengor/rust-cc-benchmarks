@@ -56,6 +56,6 @@ impl TreeNode {
 
 pub fn benchmark_count_binary_trees(c: &mut BenchmarkGroup<impl Measurement>) {
     c.bench_function("rc", |b| {
-        b.iter(|| count_binary_trees(black_box(11)))
+        b.iter_with_large_drop(|| count_binary_trees(black_box(11)))
     });
 }

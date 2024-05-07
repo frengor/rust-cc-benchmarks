@@ -62,6 +62,6 @@ impl Node {
 
 pub fn benchmark_large_linked_list(c: &mut BenchmarkGroup<impl Measurement>) {
     c.bench_function("arc", |b| {
-        b.iter(|| large_linked_list(black_box(4096)))
+        b.iter_with_large_drop(|| large_linked_list(black_box(4096)))
     });
 }
