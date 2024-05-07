@@ -28,6 +28,7 @@ fn count_binary_trees(max_size: usize) -> Vec<usize> {
     res
 }
 
+#[derive(Trace, Finalize)]
 enum TreeNode {
     Nested {
         left: Cc<TreeNode>,
@@ -35,17 +36,6 @@ enum TreeNode {
     },
     End,
 }
-
-unsafe impl Trace for TreeNode {
-    fn trace(&self, ctx: &mut Context<'_>) {
-        if let Self::Nested { left, right } = self {
-            left.trace(ctx);
-            right.trace(ctx);
-        }
-    }
-}
-
-impl Finalize for TreeNode {}
 
 impl TreeNode {
     fn new(depth: usize) -> Self {
