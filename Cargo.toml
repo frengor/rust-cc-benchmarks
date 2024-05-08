@@ -43,3 +43,7 @@ harness = false
 
 [target.'cfg(not(target_env = "msvc"))'.dependencies]
 tikv-jemallocator = { version = "0.5.4", optional = true }
+
+[profile.bench]
+codegen-units = 1
+lto = true
