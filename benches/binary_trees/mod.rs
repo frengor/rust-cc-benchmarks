@@ -8,6 +8,7 @@ mod gc;
 mod safe_gc;
 #[cfg(feature = "shredder")]
 mod shredder;
+#[cfg(feature = "broom")]
 mod broom;
 mod mgc;
 mod bacon_rajan_cc;
@@ -22,6 +23,7 @@ pub fn binary_trees(c: &mut Criterion) {
     safe_gc::benchmark_count_binary_trees(group);
     #[cfg(feature = "shredder")]
     shredder::benchmark_count_binary_trees(group);
+    #[cfg(feature = "broom")]
     broom::benchmark_count_binary_trees(group);
     mgc::benchmark_count_binary_trees(group);
     bacon_rajan_cc::benchmark_count_binary_trees(group);
