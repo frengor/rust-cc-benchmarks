@@ -32,6 +32,9 @@ broom = { version = "0.3.2", optional = true }
 bacon_rajan_cc = "0.4.0"
 
 [features]
+default = ["rust-cc-mark-alive"]
+rust-cc-mark-alive = []
+
 shredder = ["dep:shredder"]
 broom = ["dep:broom"]
 safe-gc = ["dep:safe-gc"]

@@ -38,6 +38,10 @@ impl List {
             *previous.borrow_mut() = Some(cons.clone());
         }
         self.head = cons;
+        #[cfg(feature = "rust-cc-mark-alive")]
+        if let Node::Cons { next, .. } = &*self.head {
+            next.mark_alive();
+        }
     }
 
     fn len(&self) -> usize {
