@@ -4,8 +4,8 @@ mod rc;
 mod arc;
 mod rust_cc;
 mod gc;
-#[cfg(feature = "safe-gc")]
-mod safe_gc;
+#[cfg(feature = "zb-safe-gc")]
+mod zb_safe_gc;
 #[cfg(feature = "shredder")]
 mod shredder;
 #[cfg(feature = "broom")]
@@ -19,8 +19,8 @@ pub fn binary_trees(c: &mut Criterion) {
     arc::benchmark_count_binary_trees(group);
     rust_cc::benchmark_count_binary_trees(group);
     gc::benchmark_count_binary_trees(group);
-    #[cfg(feature = "safe-gc")]
-    safe_gc::benchmark_count_binary_trees(group);
+    #[cfg(feature = "zb-safe-gc")]
+    zb_safe_gc::benchmark_count_binary_trees(group);
     #[cfg(feature = "shredder")]
     shredder::benchmark_count_binary_trees(group);
     #[cfg(feature = "broom")]

@@ -4,7 +4,7 @@ use std::hint::black_box;
 use criterion::BenchmarkGroup;
 use criterion::measurement::Measurement;
 
-use safe_gc::*;
+use zb_safe_gc::*;
 
 // BENCHMARK 2: It's binary-trees from the benchmarks game!
 
@@ -100,7 +100,7 @@ impl TreeNode {
 }
 
 pub fn benchmark_count_binary_trees(c: &mut BenchmarkGroup<impl Measurement>) {
-    c.bench_function("safe-gc", |b| {
+    c.bench_function("zb-safe-gc", |b| {
         b.iter_with_large_drop(|| count_binary_trees(black_box(11)))
     });
 }

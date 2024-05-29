@@ -6,7 +6,7 @@ use criterion::measurement::Measurement;
 use rand::rngs::StdRng;
 use rand::seq::SliceRandom;
 
-use safe_gc::*;
+use zb_safe_gc::*;
 
 // BENCHMARK 1: My janky stress test
 // (It basically creates a graph where every node is rooted, then de-roots some nodes a few at a time)
@@ -69,5 +69,5 @@ fn stress_test(rng: &mut StdRng) -> Vec<usize> {
 }
 
 pub fn benchmark_stress_test(c: &mut BenchmarkGroup<impl Measurement>, rng: &mut StdRng) {
-    c.bench_function("safe-gc", |b| b.iter_with_large_drop(|| stress_test(black_box(rng))));
+    c.bench_function("zb-safe-gc", |b| b.iter_with_large_drop(|| stress_test(black_box(rng))));
 }

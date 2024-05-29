@@ -2,7 +2,7 @@ use criterion::measurement::Measurement;
 use criterion::BenchmarkGroup;
 use std::hint::black_box;
 
-use safe_gc::*;
+use zb_safe_gc::*;
 
 fn large_linked_list(size: usize) -> Vec<usize> {
     let mut res = Vec::new();
@@ -119,5 +119,5 @@ impl Node {
 }
 
 pub fn benchmark_large_linked_list(c: &mut BenchmarkGroup<impl Measurement>) {
-    c.bench_function("safe-gc", |b| b.iter_with_large_drop(|| large_linked_list(black_box(4096))));
+    c.bench_function("zb-safe-gc", |b| b.iter_with_large_drop(|| large_linked_list(black_box(4096))));
 }
