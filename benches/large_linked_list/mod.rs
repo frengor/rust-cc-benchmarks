@@ -10,6 +10,7 @@ mod zb_safe_gc;
 mod shredder;
 #[cfg(feature = "broom")]
 mod broom;
+#[cfg(feature = "mgc")]
 mod mgc;
 mod bacon_rajan_cc;
 
@@ -25,6 +26,7 @@ pub fn large_linked_list(c: &mut Criterion) {
     shredder::benchmark_large_linked_list(group);
     #[cfg(feature = "broom")]
     broom::benchmark_large_linked_list(group);
+    #[cfg(feature = "mgc")]
     mgc::benchmark_large_linked_list(group);
     bacon_rajan_cc::benchmark_large_linked_list(group);
 }

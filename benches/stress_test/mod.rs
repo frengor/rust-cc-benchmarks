@@ -10,6 +10,7 @@ mod zb_safe_gc;
 mod shredder;
 #[cfg(feature = "broom")]
 mod broom;
+#[cfg(feature = "mgc")]
 mod mgc;
 mod bacon_rajan_cc;
 
@@ -23,6 +24,7 @@ pub fn stress_test(c: &mut Criterion) {
     shredder::benchmark_stress_test(group, &mut create_rng());
     #[cfg(feature = "broom")]
     broom::benchmark_stress_test(group, &mut create_rng());
+    #[cfg(feature = "mgc")]
     mgc::benchmark_stress_test(group, &mut create_rng());
     bacon_rajan_cc::benchmark_stress_test(group, &mut create_rng());
 }
