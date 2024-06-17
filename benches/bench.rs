@@ -17,9 +17,9 @@ criterion_group!(
     name = benches;
     config = Criterion::default().measurement_time(Duration::from_secs(10));
     targets =
-        stress_test::stress_test,
-        binary_trees::binary_trees,
         binary_trees_with_parent_pointers::binary_trees_with_parent_pointers,
-        large_linked_list::large_linked_list
+        large_linked_list::large_linked_list,
+        stress_test::stress_test,
+        binary_trees::binary_trees
 );
 criterion_main!(benches);

@@ -7,14 +7,15 @@ use shredder::*;
 
 fn large_linked_list(size: usize) -> Vec<usize> {
     let mut res = Vec::new();
-    for _ in 0..30 {
-        let mut list = List::new();
-        for _ in 0..size {
-            list.add();
+    run_with_gc_cleanup(|| {
+        for _ in 0..30 {
+            let mut list = List::new();
+            for _ in 0..size {
+                list.add();
+            }
+            res.push(list.len());
         }
-        res.push(list.len());
-    }
-    collect();
+    });
     res
 }
 

@@ -12,7 +12,7 @@ fn large_linked_list(size: usize) -> Vec<usize> {
         for _ in 0..size {
             list.add(&mut heap);
         }
-        res.push(list.len(&mut heap));
+        res.push(list.len(&heap));
     }
     heap.clean();
     res
@@ -31,11 +31,11 @@ impl List {
 
     fn add(&mut self, heap: &mut Heap<Node>) {
         let cons = heap.insert(Node::Cons {
-            next: self.head.as_ref().clone(),
+            next: self.head.handle(),
             previous: None,
         });
-        if let Node::Cons{ previous, .. } = heap.get_mut(self.head.as_ref()).unwrap() {
-            *previous = Some(cons.as_ref().clone());
+        if let Node::Cons { previous, .. } = heap.get_mut(self.head.as_ref()).unwrap() {
+            *previous = Some(cons.handle());
         }
         self.head = cons;
     }

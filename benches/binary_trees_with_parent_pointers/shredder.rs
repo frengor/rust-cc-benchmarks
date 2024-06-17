@@ -11,7 +11,7 @@ use shredder::*;
 
 fn count_binary_trees_with_parent(max_size: usize) -> Vec<usize> {
     let mut res = Vec::new();
-    {
+    run_with_gc_cleanup(|| {
         let min_size = 4;
 
         for depth in (min_size..max_size).step_by(2) {
@@ -24,8 +24,7 @@ fn count_binary_trees_with_parent(max_size: usize) -> Vec<usize> {
 
             res.push(check);
         }
-    }
-    collect();
+    });
     res
 }
 

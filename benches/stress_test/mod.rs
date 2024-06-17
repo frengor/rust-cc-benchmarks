@@ -19,6 +19,7 @@ pub fn stress_test(c: &mut Criterion) {
     let group = &mut c.benchmark_group("stress test");
     rust_cc::benchmark_stress_test(group, &mut create_rng());
     gc::benchmark_stress_test(group, &mut create_rng());
+    bacon_rajan_cc::benchmark_stress_test(group, &mut create_rng());
     safe_gc::benchmark_stress_test(group, &mut create_rng());
     #[cfg(feature = "zb-safe-gc")]
     zb_safe_gc::benchmark_stress_test(group, &mut create_rng());
@@ -28,7 +29,6 @@ pub fn stress_test(c: &mut Criterion) {
     broom::benchmark_stress_test(group, &mut create_rng());
     #[cfg(feature = "mgc")]
     mgc::benchmark_stress_test(group, &mut create_rng());
-    bacon_rajan_cc::benchmark_stress_test(group, &mut create_rng());
 }
 
 fn create_rng() -> StdRng {

@@ -21,6 +21,7 @@ pub fn large_linked_list(c: &mut Criterion) {
     arc::benchmark_large_linked_list(group);
     rust_cc::benchmark_large_linked_list(group);
     gc::benchmark_large_linked_list(group);
+    bacon_rajan_cc::benchmark_large_linked_list(group);
     safe_gc::benchmark_large_linked_list(group);
     #[cfg(feature = "zb-safe-gc")]
     zb_safe_gc::benchmark_large_linked_list(group);
@@ -30,5 +31,4 @@ pub fn large_linked_list(c: &mut Criterion) {
     broom::benchmark_large_linked_list(group);
     #[cfg(feature = "mgc")]
     mgc::benchmark_large_linked_list(group);
-    bacon_rajan_cc::benchmark_large_linked_list(group);
 }

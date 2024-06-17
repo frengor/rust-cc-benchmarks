@@ -23,7 +23,7 @@ const SHRINK_DIV: usize = 1 << 10;
 
 fn stress_test(rng: &mut StdRng) -> Vec<usize> {
     let mut res = Vec::new();
-    {
+    run_with_gc_cleanup(|| {
         let mut nodes = Vec::new();
 
         for i in 0..=NODE_COUNT {
@@ -47,8 +47,7 @@ fn stress_test(rng: &mut StdRng) -> Vec<usize> {
                 res.push(nodes.len());
             }
         }
-    }
-    collect();
+    });
     res
 }
 

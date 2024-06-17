@@ -21,6 +21,7 @@ pub fn binary_trees_with_parent_pointers(c: &mut Criterion) {
     arc::benchmark_count_binary_trees_with_parent(group);
     rust_cc::benchmark_count_binary_trees_with_parent(group);
     gc::benchmark_count_binary_trees_with_parent(group);
+    bacon_rajan_cc::benchmark_count_binary_trees_with_parent(group);
     safe_gc::benchmark_count_binary_trees_with_parent(group);
     #[cfg(feature = "zb-safe-gc")]
     zb_safe_gc::benchmark_count_binary_trees_with_parent(group);
@@ -30,5 +31,4 @@ pub fn binary_trees_with_parent_pointers(c: &mut Criterion) {
     broom::benchmark_count_binary_trees_with_parent(group);
     #[cfg(feature = "mgc")]
     mgc::benchmark_count_binary_trees_with_parent(group);
-    bacon_rajan_cc::benchmark_count_binary_trees_with_parent(group);
 }
