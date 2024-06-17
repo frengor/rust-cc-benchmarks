@@ -4,6 +4,7 @@ mod rc;
 mod arc;
 mod rust_cc;
 mod gc;
+mod safe_gc;
 #[cfg(feature = "zb-safe-gc")]
 mod zb_safe_gc;
 #[cfg(feature = "shredder")]
@@ -20,6 +21,7 @@ pub fn binary_trees_with_parent_pointers(c: &mut Criterion) {
     arc::benchmark_count_binary_trees_with_parent(group);
     rust_cc::benchmark_count_binary_trees_with_parent(group);
     gc::benchmark_count_binary_trees_with_parent(group);
+    safe_gc::benchmark_count_binary_trees_with_parent(group);
     #[cfg(feature = "zb-safe-gc")]
     zb_safe_gc::benchmark_count_binary_trees_with_parent(group);
     #[cfg(feature = "shredder")]

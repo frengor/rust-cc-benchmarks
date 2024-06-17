@@ -26,6 +26,7 @@ parking_lot = "=0.11" # For mgc benchmarks
 rust-cc = { git = "https://github.com/frengor/rust-cc", branch = "dev" }
 gc = { git = "https://github.com/Manishearth/rust-gc", features = ["derive"] }
 zb-safe-gc = { git = "https://github.com/ZainlessBrombie/rs-safe-gc", package = "safe-gc", optional = true }
+safe-gc = "1.0.0"
 shredder = { version = "0.2.0", optional = true }
 mgc = { git = "https://github.com/sunjay/mgc", optional = true }
 broom = { version = "0.3.2", optional = true }
