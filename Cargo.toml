@@ -22,33 +22,40 @@ criterion = { version = "0.5.1", features = ["html_reports"] }
 rand = "0.8.3"
 parking_lot = "=0.11" # For mgc benchmarks
 
-#rust-cc = "0.2.0"
-rust-cc = { git = "https://github.com/frengor/rust-cc", branch = "dev" }
-gc = { git = "https://github.com/Manishearth/rust-gc", features = ["derive"] }
+rust-cc = { version = "0.4.0", optional = true }
+#rust-cc = { git = "https://github.com/frengor/rust-cc", branch = "dev", optional = true }
+gc = { git = "https://github.com/Manishearth/rust-gc", features = ["derive"], optional = true }
 zb-safe-gc = { git = "https://github.com/ZainlessBrombie/rs-safe-gc", package = "safe-gc", optional = true }
-safe-gc = "1.0.0"
+safe-gc = {  version = "1.0.0", optional = true }
 shredder = { version = "0.2.0", optional = true }
 mgc = { git = "https://github.com/sunjay/mgc", optional = true }
 broom = { version = "0.3.2", optional = true }
-bacon_rajan_cc = "0.4.0"
+bacon_rajan_cc = { version = "0.4.0", optional = true }
 
 [features]
-default = ["rust-cc-mark-alive"]
-rust-cc-mark-alive = []
+default = ["rust-cc", "gc", "safe-gc", "broom", "rust-cc-mark-alive"]
 
-shredder = ["dep:shredder"]
-broom = ["dep:broom"]
-mgc = ["dep:mgc"]
-zb-safe-gc = ["dep:zb-safe-gc"]
+rust-cc-mark-alive = []
 jemalloc = ["dep:tikv-jemallocator"]
+
+rc = []
+arc = []
+rust-cc = ["dep:rust-cc"]
+gc = ["dep:gc"]
+zb-safe-gc = ["dep:zb-safe-gc"]
+safe-gc = ["dep:safe-gc"]
+shredder = ["dep:shredder"]
+mgc = ["dep:mgc"]
+broom = ["dep:broom"]
+bacon-rajan-cc = ["dep:bacon_rajan_cc"]
 
 [[bench]]
 name = "bench"
 harness = false
 
 [target.'cfg(not(target_env = "msvc"))'.dependencies]
-tikv-jemallocator = { version = "0.5.4", optional = true }
+tikv-jemallocator = { version = "0.6.0", optional = true }
 
 [profile.bench]
 codegen-units = 1
-lto = true
+lto = "thin"
