@@ -20,10 +20,10 @@ bench = false
 [dependencies]
 criterion = { version = "0.5.1", features = ["html_reports"] }
 rand = "0.8.3"
-parking_lot = "=0.11" # For mgc benchmarks
+parking_lot = { version = "=0.11", optional = true } # For mgc benchmarks
 
-rust-cc = { version = "0.6.0", optional = true }
-#rust-cc = { git = "https://github.com/frengor/rust-cc", branch = "dev", optional = true }
+rust-cc = { version = "0.6.1", optional = true, default-features = false, features = ["std", "derive", "auto-collect"] }
+#rust-cc = { git = "https://github.com/frengor/rust-cc", branch = "dev", optional = true, default-features = false, features = ["std", "derive", "auto-collect"] }
 gc = { git = "https://github.com/Manishearth/rust-gc", features = ["derive"], optional = true }
 zb-safe-gc = { git = "https://github.com/ZainlessBrombie/rs-safe-gc", package = "safe-gc", optional = true }
 safe-gc = {  version = "1.0.0", optional = true }
@@ -33,11 +33,24 @@ broom = { version = "0.3.2", optional = true }
 bacon_rajan_cc = { version = "0.4.0", optional = true }
 
 [features]
-default = ["rust-cc", "gc", "safe-gc", "broom", "rust-cc-mark-alive"]
+default = [
+    "stress-test", "binary-trees", "binary-trees-with-parent-pointers", "large-linked-list",
+    "rust-cc", "rc", "arc", "gc", "bacon-rajan-cc", "safe-gc", "broom",
+    "rust-cc-mark-alive", "rust-cc-finalization",
+]
 
+# General features
 rust-cc-mark-alive = []
+rust-cc-finalization=["rust-cc/finalization"]
 jemalloc = ["dep:tikv-jemallocator"]
 
+# Benchmarks
+stress-test = []
+binary-trees = []
+binary-trees-with-parent-pointers = []
+large-linked-list = []
+
+# Garbage collectors
 rc = []
 arc = []
 rust-cc = ["dep:rust-cc"]
@@ -45,7 +58,7 @@ gc = ["dep:gc"]
 zb-safe-gc = ["dep:zb-safe-gc"]
 safe-gc = ["dep:safe-gc"]
 shredder = ["dep:shredder"]
-mgc = ["dep:mgc"]
+mgc = ["dep:mgc", "dep:parking_lot"]
 broom = ["dep:broom"]
 bacon-rajan-cc = ["dep:bacon_rajan_cc"]
 

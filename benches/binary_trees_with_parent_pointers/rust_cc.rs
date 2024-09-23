@@ -101,7 +101,7 @@ impl TreeNodeWithParent {
 }
 
 pub fn benchmark_count_binary_trees_with_parent(c: &mut BenchmarkGroup<impl Measurement>) {
-    c.bench_function("rust-cc", |b| {
+    c.bench_function(crate::RUST_CC_BENCH_NAME, |b| {
         b.iter_with_large_drop(|| count_binary_trees_with_parent(black_box(11)))
     });
 }

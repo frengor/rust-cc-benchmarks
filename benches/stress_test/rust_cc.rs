@@ -53,5 +53,5 @@ fn stress_test(rng: &mut StdRng) -> Vec<usize> {
 }
 
 pub fn benchmark_stress_test(c: &mut BenchmarkGroup<impl Measurement>, rng: &mut StdRng) {
-    c.bench_function("rust-cc", |b| b.iter_with_large_drop(|| stress_test(black_box(rng))));
+    c.bench_function(crate::RUST_CC_BENCH_NAME, |b| b.iter_with_large_drop(|| stress_test(black_box(rng))));
 }

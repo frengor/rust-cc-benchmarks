@@ -67,7 +67,7 @@ impl Node {
 }
 
 pub fn benchmark_large_linked_list(c: &mut BenchmarkGroup<impl Measurement>) {
-    c.bench_function("rust-cc", |b| {
+    c.bench_function(crate::RUST_CC_BENCH_NAME, |b| {
         b.iter_with_large_drop(|| large_linked_list(black_box(4096)))
     });
 }
